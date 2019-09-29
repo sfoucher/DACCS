@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "C:\\dev\\Anaconda3\\envs\\ee\\python.exe"
+    "python.envFile": "${workspaceFolder}/.vscode/.env",
+    "python.pythonPath": "C:\\dev\\Anaconda3\\envs\\ee\\python.exe",
+    "python.autoComplete.extraPaths": ["C:\\dev\\Anaconda3\\envs\\ee\\Lib\\site-packages\\ee"]
 }
