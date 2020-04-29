@@ -1,0 +1,32 @@
+ARG BASE_CONTAINER=jupyter/scipy-notebook
+FROM $BASE_CONTAINER
+
+LABEL maintainer="Samuel Foucher"
+
+USER root
+
+# Install all OS dependencies for fully functional notebook server
+RUN apt-get update && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Switch back to jovyan to avoid accidental container runs as root
+USER $NB_UID
+
+# Ensure usage of bash (simplifies source activate calls)
+SHELL ["/bin/bash", "-c"]
+
+# Install eodag
+RUN cd /home/$NB_USER/work && \
+    conda update -n base conda --yes && \
+    conda install --quiet --yes ipyleaflet  nb_conda_kernels ipykernel && \
+    git clone https://github.com/dcs4cop/xcube && \
+    cd /home/$NB_USER/work/xcube && \
+    conda env create -f=environment.yml && \
+    source activate xcube && \
+    pip install -e . && \
+#    jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-leaflet && \
+#    conda activate xcube && \
+#    conda install --quiet --yes ipykernel && \
+#    conda clean --all -f -y && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
