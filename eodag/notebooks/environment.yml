@@ -1,0 +1,9 @@
+name: eodag
+channels:
+  - conda-forge
+dependencies:
+  - python=3.7
+  - xarray
+  - pip
+  - pip:
+    - eodag
